@@ -13,12 +13,12 @@
        keyword))
 
 (defn metadata
-  "Return a map of category data from the instance"
+  "Return a map (or string) of category data from the instance"
   [category]
   (try
     (with-open [j (category-data-stream category)]
       (let [r (slurp j)]
-        (if (first r \{)
+        (if (= (first r) \{)
           (json/read-str r :key-fn key-fn)
           r)))
     (catch Exception e)))
